@@ -1,0 +1,130 @@
+body {
+    background-color: blue;
+}
+
+.rate-meme {
+    width: 80vw;
+    height:100vh;
+    display: flex;
+    align-items: center;
+    position: fixed;
+    top:0;
+    left:10vw;
+}
+
+.meme-buddy {
+    background-repeat: space;
+    height:100%;
+    width:15vh;
+    display: grid;
+    justify-content:space-around;
+    padding-right: 5%;
+    
+    
+}
+
+.meme-buddy button {
+    
+    border-radius: 90%;
+    height:10vh;
+    aspect-ratio: 1/1;
+    border: none;
+    margin-top: auto;
+}
+
+.meme-buddy p {
+    color:white;
+    font-size: 1vw;
+    align-self: auto;
+}
+
+.rate-part {
+    height:100vh;
+    width:60vw;
+    
+    display: grid;
+    justify-self: center;
+    justify-content: center;
+    align-content: space-evenly
+}
+
+.meme {
+    height:60vh;
+    width:50vw;
+    
+    box-shadow: 0px 0px 60px 40px rgba(255, 255,255, 0.5);
+    backdrop-filter: blur(8px);
+    justify-self: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.meme-rate-div {
+    display: flex;
+    justify-content: center;
+    height: 10vh;
+    width:100%;
+    
+
+}
+
+.vote-div {
+    width: 33%;
+    height:100%;
+    
+    display: grid;
+    justify-content: center;
+    text-align: center;
+}
+
+.vote-div button {
+    height:5vh;
+    aspect-ratio: 1/1;
+    border-radius: 90%;
+    background-color: aqua;
+    border:none;
+    justify-self: center;
+    margin-top: auto;
+    box-shadow: 0px 0px 20px 7px rgba(255, 255,255, 0.5);
+    backdrop-filter: blur(8px);
+}
+
+.vote-div p {
+    color:white;
+    font-size: 1vw;
+    
+    margin-bottom: auto;
+    
+}
+
+.timer-div {
+    height:100vh;
+    width:20vw;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.timer-div-2 {
+    height:30%;
+    width:100%;
+    display: grid;
+    align-content: center;
+    text-align: center;
+    color:white;
+    font-size: 1.3vw;
+    margin-bottom: 25%;
+    
+    
+}
+
+.timer-div-2 p {
+    margin-bottom: 3%;
+    letter-spacing: 1px;
+}
+
+.time {
+    margin-top: auto;
+}
+

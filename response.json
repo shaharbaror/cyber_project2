@@ -1,0 +1,15 @@
+{
+  "AAAA": {
+    "players_ip": ["127.0.0.1","192.8.57.1"],
+    "players": ["shahar","nerya"],
+    "score": [0,0],
+    "finished": [false,false],
+    "round": 1,
+    "memes_this_round": [],
+    "all_memes_made": [],
+    "time_per_meme": 120,
+    "round_timer": 1685692885,
+    "round_rolls": 5,
+    "remaining_rolls": [5, 5]
+  }
+}

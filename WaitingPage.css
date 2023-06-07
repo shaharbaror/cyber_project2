@@ -1,0 +1,37 @@
+body {
+    background-color: rgb(45, 45, 172);
+    display: flex;
+    justify-content: center;
+    align-items: auto ;
+}
+.main_div {
+    width:50%;
+    aspect-ratio: 1 / 1;
+    text-align: center;
+    
+}
+
+.title_div {
+    height: 35%;
+    width: 100%;
+    color: white;
+    margin-top: 20vh;
+    font-size: 3vw;
+    
+}
+
+.title_div h2 {
+    margin-bottom: auto;
+}
+
+.title_div h1 {
+    font-size: 6vw;
+    margin-top: auto;
+}
+
+.status_div {
+    height:40%;
+    width: 100%;
+    color:lightgreen;
+
+}
