@@ -16,12 +16,7 @@ class Protocol:
         data = request.split("\r\n\r\n")
         header = data[0].split("\r\n")
         header = header[0].split(" ")
-
-        response = {
-            "header_top": header,
-            "type": header[0],
-            "body": data[1]
-        }
+        data.append("")
         return header, data[1]
 
     @staticmethod
@@ -125,6 +120,7 @@ class Protocol:
         clean_lobby["finished"].append(False)
         clean_lobby["remaining_rolls"].append(0)
         clean_lobby["started"].append(False)
+        clean_lobby["players_meme"].append(-1)
 
         return clean_lobby
 

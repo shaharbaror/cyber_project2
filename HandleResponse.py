@@ -7,7 +7,7 @@ from Protocol import Protocol
 from mememaker import MemeMaker
 
 
-
+ERR_EXCEPTIONS = ["makeuser.html", "makeuser.css", "makeuser","makeuser.js", "favicon.ico", "favicon.png"]
 # If the header contains "index" in it then go to this function
 def index_functions(header, body, player_ip):
     ip = player_ip
@@ -51,7 +51,7 @@ def index_functions(header, body, player_ip):
 
 
 # if the header contains "firstpage" in it then go to this function
-def first_page_functions(header, body, ip = "128.0.0.1"):
+def first_page_functions(header, body, ip):
     lobby_name = header[1].split("/")[0]
     with open("lobbies.json", "r") as f:
         lobbies = json.load(f)
@@ -66,16 +66,15 @@ def first_page_functions(header, body, ip = "128.0.0.1"):
 
         meme = json.loads(body)
 
-        for i in range(len(lobby["players"])):
-
-            if lobby["players"][i] == lobby["players"][ip]:
-
-                lobby["finished"][i] = True
-                lobby["memes_this_round"].append(Protocol.prepare_meme(meme, i))
-                lobbies[lobby_name] = lobby
+        player_index = lobby["players_ip"].index(ip)
+        lobby["finished"][player_index] = True
+        meme["creator"] = player_index
+        lobby["memes_this_round"].append(meme)
+        lobbies[lobby_name] = lobby
 
         with open("lobbies.json", "w") as f:
             json.dump(lobbies, f)
+        return Protocol.create_msg(b"done", "text/txt")
 
     else:
         if "a=startgame" in header[1]:
@@ -117,7 +116,7 @@ def first_page_functions(header, body, ip = "128.0.0.1"):
             rnd = randint(1, 2)
             print("got there")
 
-            players_index = lobby["players_ip"].index("127.0.1.2")
+            players_index = lobby["players_ip"].index(ip)
             for i in range(len(lobby["players_ip"])):
                 print(lobby["players_ip"][i])
 
@@ -178,14 +177,30 @@ def ratememe_functions(header,body, ip):
     # If player needs the first meme get them the first meme, after everyone done voting: get the meme to the all_time_meme zone and update the player's score
 
 
+def waiting_functions(header, body, ip, lobbies):
+    lobby_name = header[1].split("/")[0]
+    lobby = lobbies[lobby_name]
+    if "a=gettime" in header[1]:
+        msg = "{" + f'"time":{int(lobby["round_timer"]- time.time())}' + "}"
+        print(time.time())
+        print(lobby["round_timer"])
+        return Protocol.create_msg(msg.encode(), "text/json")
+
+    if "a=setup" in header[1]:
+        msg = "{" + f'"time":{int(lobby["round_timer"] - time.time())}' + "}"
+        return Protocol.create_msg(msg.encode(), "text/json")
+
+
 def check_for_errors(header, body, ip):
     some_error = None
     lobby_name = header[1].split("/")[0]
+    print(lobby_name)
 
     with open("lobbies.json", "r") as f:
         lobbies = json.load(f)
-
-    if (lobby_name not in lobbies) and (not os.path.isfile(lobby_name)):
+    print(ERR_EXCEPTIONS, lobby_name in ERR_EXCEPTIONS)
+    if (lobby_name not in lobbies) and (lobby_name not in ERR_EXCEPTIONS):
+        print("did")
         some_error = "404 not found"
 
     if some_error:
@@ -204,20 +219,27 @@ class HandleResponse:
     @staticmethod
     def handle_request(request, ip):
         print("ehy")
-
+        with open("lobbies.json", "r") as f:
+            lobbies = json.load(f)
         header, body = Protocol.proces_request(request)
         header[1] = header[1][1:]
         # header: 127.0.0.1/firstpage/WHDSK?s=f&a=something
 
         # header: 127.0.0.1/index?a=c
-
+        print(header)
         is_error = check_for_errors(header, body, ip[0])
         if not is_error == b"ok":
+            print("errr")
+            print(is_error)
             return is_error
 
         # get info about the file and its name
+
+        #FFJDS/firstpage.html
+        #MemeBank/meme01.png
+        #makeuser/index?a=c
         file_name = header[1].split("/")
-        if len(file_name) > 1:
+        if file_name[0] in lobbies:
             file_name = file_name[1:]
             file_name = "/".join(file_name)
         else:
@@ -225,11 +247,8 @@ class HandleResponse:
 
         header_without_lobby = header[1].split("/")
         if len(header_without_lobby) > 2:
-            header_without_lobby = header_without_lobby[2:]
-        else:
             header_without_lobby = header_without_lobby[1:]
         header_without_lobby = "/".join(header_without_lobby)
-        print(header)
         print(file_name)
 
         # if the file is accessible then access and send it
@@ -247,13 +266,15 @@ class HandleResponse:
         print(header_without_lobby)
 
         # if the request is fetch then respond correctly
-        if "index" in header_without_lobby:
+        if "makeuser" in header_without_lobby:
             print("ok")
             return index_functions(header, body, ip[0])
         if "firstpage" in header_without_lobby:
             print("here")
-            return first_page_functions(header, body)
+            return first_page_functions(header, body, ip[0])
         if "ratememe" in header_without_lobby:
             return ratememe_functions(header, body, ip[0])
+        if "waitingpage" in header_without_lobby:
+            return waiting_functions(header, body, ip[0], lobbies)
         return Protocol.create_msg(b" ", "text/txt")
 

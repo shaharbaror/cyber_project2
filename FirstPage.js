@@ -41,7 +41,7 @@ function AtStart() {
 async function FetchFirstData(){
     var data;
     
-    var response = await fetch(`127.0.0.1/firstpage?s=f&a=startgame`);
+    var response = await fetch(`firstpage?s=f&a=startgame`);
     data = await response.json();
     if (data.send) {
         window.location.replace(`/makeuser.html`);
@@ -99,7 +99,7 @@ async function ReRollMeme(is_ok = null, memeIndex = null, captions = null, style
     if (memeInfo.rollsLeft > 0) {
         let response,data;
         if (!(memeIndex && captions && styles)){
-            response = await fetch(`127.0.0.1/firstpage?s=f&a=newmeme`);
+            response = await fetch(`firstpage?s=f&a=newmeme`);
             if (response){
                 data = await response.json();
             }
@@ -164,9 +164,8 @@ async function ReRollMeme(is_ok = null, memeIndex = null, captions = null, style
 
 function SubmitMeme() {
     let post = {
-        memeIndex:memeInfo.memeIndex,
+        index:memeInfo.memeIndex,
         captions:[],
-        player_id,
     
     }
     //add all of the text from the captions to the meme info
@@ -176,8 +175,8 @@ function SubmitMeme() {
     console.log(post);
 
     try{
-        console.log(`127.0.0.1/firstpage?s=t&i=${memeInfo.memeIndex}&c=[${memeInfo.cContent}]`);
-        fetch(`127.0.0.1/FirstPage?s=t`,{
+        console.log(`firstpage?s=t&i=${memeInfo.memeIndex}&c=[${memeInfo.cContent}]`);
+        fetch(`firstpage?s=t`,{
             method: "POST", //get or post
             headers: {"Content-Type": "application/json;charset=utf-8"},
             body:JSON.stringify(post)
