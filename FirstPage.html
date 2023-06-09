@@ -1,0 +1,38 @@
+<html>
+    <head>
+        <link href="FirstPage.css" rel="stylesheet"/>
+    </head>
+    <body>
+        <div class="top_div">
+            <div>
+                <h1>Make Your Meme</h1>
+            </div>
+            <div class="status_div">
+                <h2 id="players_done"> 1/7 are Done</h2>
+                <h2 id="timer"> 01:15</h2>
+            </div>
+        </div>
+
+        <div class="design_container">
+            <div class="meme_container">
+                <div id="meme" class="meme">
+                    <div id="c1d" class="caption1_div">
+                        <textarea class="meme_caption" id="caption1">Caption 1</textarea>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="meme_make_div">
+                
+
+                <div class="submit_btn_div">
+                    <button class="reroll_meme_button" onclick="ReRollMeme()" >Reroll meme</button>
+                    <!-- need to add an indicator to how many rerolls the user have-->
+                    <button class="submit_btn" onclick="SubmitMeme()">Submit Meme</button>
+                </div>
+            </div>
+        </div>
+
+        <script src="FirstPage.js"></script>
+    </body>
+</html>

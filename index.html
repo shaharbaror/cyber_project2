@@ -1,0 +1,41 @@
+<html>
+  <head>
+    <title>hello world</title>
+    <link rel="stylesheet" href="style.css" />
+    <!-- <link rel="stylesheet" href="postion.css" /> -->
+  </head>
+
+  <body>
+    <header class="header"></header>
+
+    <!-- This is the player part where you can see all the current players in the game -->
+    <div id="player_stash">
+      <div id="player-1" class="player">
+        <div class="player-data">
+          <p>player</p>
+          <p>score:0</p>
+        </div>
+        <div class="player-pic">
+          <img src="defaultPic.png" alt="pfp" class="pfp" />
+        </div>
+      </div>
+    </div>
+
+    <!-- This is the part where the meme is shown and you insert the word -->
+    <div class="meme absolute meme_box" id="meme">
+      <div id="cap-div1">
+      <p id="caption1" class="caption1 caption-txt"> Caption 1</p>
+    </div>
+    </div>
+    <div id="inputs" class="inputs absolute">
+      <button onclick="ShowMeme()" class="show-meme">Show Meme</button>
+      <div id="input-field">
+        <input class="za-inpudo" type="text" id="cp1" value="caption1" />
+      </div>
+      <button onclick="SubmitMeme()" id="submit-meme" class="submit-meme"> Submit Meme </button>
+    </div>
+
+    <script src="Display_meme.js"></script>
+    <script src="javas.js"></script>
+  </body>
+</html>
